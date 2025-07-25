@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Hanna Cutie</title>
@@ -28,8 +29,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         button {
@@ -47,26 +55,23 @@
         }
     </style>
 </head>
+
 <body>
+    <button onclick="route('hanna')">Click me 💖</button>
 
-    <button onclick="showLove()">Click me 💖</button>
-
-    <div id="hearts" class="hearts">
-        ❤️💖💘💕💞💓💗💝💟❣️🫶❤️‍🔥❤️‍🩹<br>
-        ❤️💖💘💕💞💓💗💝💟❣️🫶❤️‍🔥❤️‍🩹<br>
-        ❤️💖💘💕💞💓💗💝💟❣️🫶❤️‍🔥❤️‍🩹
-    </div>
-
-    <div id="message" class="message">
-        hanna cutie :>
-    </div>
-
+    <div id="app"></div>
     <script>
         function showLove() {
             document.getElementById('hearts').style.display = 'block';
             document.getElementById('message').style.display = 'block';
         }
+        function route(route) {
+            fetch('/views/' + route).then(res => res.text()).then(data => {
+                document.getElementById('app').innerHTML = data;
+            })
+        }
     </script>
 
 </body>
+
 </html>
