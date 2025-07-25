@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCash QR Payment Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+            margin: 0;
+        }
+
+        .payment-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #0056b3;
+            margin-bottom: 20px;
+        }
+
+        #qrCodeContainer {
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 220px;
+            /* Ensure space even before QR loads */
+        }
+
+        #qrCodeContainer img {
+            max-width: 200px;
+            /* Adjust size as needed */
+            height: auto;
+            display: none;
+            /* Hide until QR is generated */
+        }
+
+        #loadingSpinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #007bff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .amount-display {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            margin-top: 15px;
+        }
+
+        .instructions {
+            color: #555;
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="payment-container">
+        <h1>Pay with GCash</h1>
+        <p class="amount-display">Amount Due: ₱ 500.00</p>
+
+        <div id="qrCodeContainer">
+            <div id="loadingSpinner"></div>
+            <img id="qrCodeImage" src="" alt="GCash QR Code">
+        </div>
+
+        <p class="instructions">
+            Open your GCash app, tap "Scan QR", and scan the QR code above to complete your payment.
+        </p>
+        <p class="error-message" id="errorMessage"></p>
+    </div>
+
+    <script>
+        // Simulate a backend API call to get GCash QR data
+        async function getGcashQrData() {
+            // In a real application, this would be a fetch() call to your backend:
+            // const response = await fetch('/api/create-gcash-payment', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ amount: 50000, currency: 'PHP', orderId: 'ORD123' })
+            // });
+            // const data = await response.json();
+            // return data.qrCodeString; // Or data.qrCodeImageUrl if the API gives an image URL
+
+            // --- SIMULATED RESPONSE ---
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    // This is a *dummy* QR code data string.
+                    // A real GCash API response would provide a unique, valid string.
+                    const dummyQrData = "https://example.com/gcash_payment_session?id=YOUR_PAYMENT_SESSION_ID_HERE&amount=500.00";
+                    resolve(dummyQrData);
+                }, 2000); // Simulate network delay
+            });
+        }
+
+        // Function to generate and display the QR code
+        async function displayGcashQrCode() {
+            const qrCodeContainer = document.getElementById('qrCodeContainer');
+            const qrCodeImage = document.getElementById('qrCodeImage');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const errorMessage = document.getElementById('errorMessage');
+
+            errorMessage.textContent = ''; // Clear previous errors
+            qrCodeImage.style.display = 'none'; // Hide image initially
+            loadingSpinner.style.display = 'block'; // Show spinner
+
+            try {
+                const qrDataString = await getGcashQrData();
+
+                if (qrDataString) {
+                    // Use qrcode.js to generate the QR code
+                    // This creates a <canvas> element inside qrCodeContainer
+                    new QRCode(qrCodeContainer, {
+                        text: qrDataString,
+                        width: 200,
+                        height: 200,
+                        colorDark: "#000000",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+
+                    loadingSpinner.style.display = 'none'; // Hide spinner
+                    // The QR code is now inside qrCodeContainer as a canvas.
+                    // If you wanted it as an <img>, you'd convert the canvas to data URL.
+                    // For qrcode.js, you generally just let it draw to the container.
+                } else {
+                    errorMessage.textContent = 'Failed to get QR code data. Please try again.';
+                    loadingSpinner.style.display = 'none';
+                }
+            } catch (error) {
+                console.error("Error generating QR code:", error);
+                errorMessage.textContent = 'An error occurred while generating the QR code. Please refresh.';
+                loadingSpinner.style.display = 'none';
+            }
+        }
+
+        // Call the function when the page loads
+        document.addEventListener('DOMContentLoaded', displayGcashQrCode);
+    </script>
+
+</body>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hanna Cutie</title>
+    <style>
+        body {
+            text-align: center;
+            margin-top: 100px;
+            background-color: #fff0f5;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .hearts {
+            font-size: 24px;
+            color: hotpink;
+            margin-top: 20px;
+            display: none;
+            animation: fadeIn 0.8s ease-in-out forwards;
+        }
+
+        .message {
+            font-size: 32px;
+            color: deeppink;
+            margin-top: 20px;
+            display: none;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: hotpink;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: deeppink;
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="showLove()">Click me 💖</button>
+
+    <div id="hearts" class="hearts">
+        ❤️💖💘💕💞💓💗💝💟❣️🫶❤️‍🔥❤️‍🩹<br>
+        ❤️💖💘💕💞💓💗💝💟❣️🫶❤️‍🔥❤️‍🩹<br>
+        ❤️💖💘💕💞💓💗💝💟❣️🫶❤️‍🔥❤️‍🩹
+    </div>
+
+    <div id="message" class="message">
+        hanna cutie :>
+    </div>
+
+    <script>
+        function showLove() {
+            document.getElementById('hearts').style.display = 'block';
+            document.getElementById('message').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
