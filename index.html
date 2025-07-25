@@ -57,18 +57,23 @@
 </head>
 
 <body>
-    <button onclick="event.preventDefault(), route('hanna.html')">Click me 💖</button>
 
-    <div id="app"></div>
+    <button onclick="showLove()">Click me 💖</button>
+
+    <div id="hearts" class="hearts">
+        ❤️💖💘💕💞💓💗💝💟❣️🫶❤️‍🔥❤️‍🩹<br>
+        ❤️💖💘💕💞💓💗💝💟❣️🫶❤️‍🔥❤️‍🩹<br>
+        ❤️💖💘💕💞💓💗💝💟❣️🫶❤️‍🔥❤️‍🩹
+    </div>
+
+    <div id="message" class="message">
+        hanna cutie :>
+    </div>
+
     <script>
         function showLove() {
             document.getElementById('hearts').style.display = 'block';
             document.getElementById('message').style.display = 'block';
-        }
-        function route(route) {
-            fetch('/views/' + route).then(res => res.text()).then(data => {
-                document.getElementById('app').innerHTML = data;
-            })
         }
     </script>
 
